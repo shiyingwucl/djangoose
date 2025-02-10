@@ -7,15 +7,14 @@ from .models import Pokemon
 def index(request):
     return HttpResponse("Hi")
 
-def dynamic_data_view(request):
-    # Retrieve dynamic data from the model
-    pokemon = Pokemon.objects.all()
+def pokemon_list(request):
 
-     # Define a context dictionary variable and Pass the dynamic data to the template
+    # query all pokemon objects?
+    pokemons = Pokemon.objects.all()
+
     context = {
-        'pokemon_name': pokemon.name,
-        'pokemon_movesets': pokemon.moveset.all(),
+        'pokemons': pokemons,
         }
 
-    # Render the template with the dynamic data
-    return render(request, 'sample_template.html', context)
+    # render template
+    return render(request, 'test.html', context)
