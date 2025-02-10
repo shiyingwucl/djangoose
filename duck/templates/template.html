@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokémon List</title>
+</head>
+<body>
+    <h1>Pokémon List</h1>
+    <ul>
+        {% for pokemon in pokemons %}
+            <li>
+                <strong>{{ pokemon.name }}</strong> - ${{ pokemon.moveset }}<br>
+            </li>
+        {% empty %}
+            <li>No moveset available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
