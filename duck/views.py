@@ -17,4 +17,4 @@ def pokemon_list(request):
         }
 
     # render template
-    return render(request, 'test.html', context)
+    return render(request, 'template.html', context)
