@@ -8,11 +8,9 @@
     <ul>
         {% for pokemon in pokemons %}
             <li>
-                <strong>{{ pokemon.name }}</strong> - ${{ pokemon.moveset }}<br>
+                <strong>{{ pokemon.name }}</strong> - {{ pokemon.first_move }},{{ pokemon.second_move }},{{ pokemon.third_move }},{{ pokemon.fourth_move }}<br>
             </li>
-        {% empty %}
-            <li>No moveset available.</li>
-        {% endfor %}
+            {% endfor %}
     </ul>
 </body>
 </html>
