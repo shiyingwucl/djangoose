@@ -14,10 +14,10 @@ class Pokemon(models.Model):
 
     name = models.CharField(max_length=60,blank=False) 
     # blank makes sure the property has to have a name, blank is admin, null is database
-    first_move = models.ManyToManyField(Move,related_name="first_move")
-    second_move = models.ManyToManyField(Move,related_name="second_move")
-    third_move = models.ManyToManyField(Move,related_name="third_move")
-    fourth_move = models.ManyToManyField(Move,related_name="fourth_move")
+    first_move = models.ManyToManyField(Move,related_name="first_move",blank=True)
+    second_move = models.ManyToManyField(Move,related_name="second_move",blank=True)
+    third_move = models.ManyToManyField(Move,related_name="third_move",blank=True)
+    fourth_move = models.ManyToManyField(Move,related_name="fourth_move",blank=True)
     # figure out how to limit many to many relationships
     # when moves are = 4, set can_get_moves to False, <4 set to True
 
