@@ -5,5 +5,5 @@ from . import views
 app_name = 'duck'
 
 urlpatterns = [
-    path('list/',views.pokemon_list,name='index')
+    path('',views.pokemon_list,name='pokemon_list')
 ]
