@@ -11,6 +11,11 @@
                 <strong>{{ pokemon.name }}</strong> - {{ pokemon.first_move }},{{ pokemon.second_move }},{{ pokemon.third_move }},{{ pokemon.fourth_move }}<br>
             </li>
             {% endfor %}
+        {% for move in moves %}
+            <li>
+                <p>{{ move.name }}, {{ move.accuracy }}, {{ move.damage }}</p>
+            </li>
+            {% endfor %}
     </ul>
 </body>
 </html>
