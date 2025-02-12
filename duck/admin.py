@@ -10,4 +10,3 @@ class MoveAdmin(admin.ModelAdmin):
 @admin.register(Pokemon)
 class PokemonAdmin(admin.ModelAdmin):
     list_display = ("name",)
-    ...
