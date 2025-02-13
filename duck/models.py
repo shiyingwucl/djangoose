@@ -15,6 +15,9 @@ class Move(models.Model):
 class Type(models.Model):
 
     name = models.CharField(max_length=30,blank=False)
+    
+    def __str__(self):
+        return self.name
 
 #class TypeRelationship():
 #
