@@ -12,4 +12,14 @@ class PokemonAdmin(admin.ModelAdmin):
 
 @admin.register(Type)
 class TypeAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("name","supereffective","notveryeffective")
+
+    def supereffective(self, obj):
+        return ", ".join([child.name for child in obj.supereffective.all()])
+    
+    def notveryeffective(self, obj):
+        return ", ".join([child.name for child in obj.notveryeffective.all()])
+    
+    supereffective.short_description = "SuperEffective"
+
+    notveryeffective.short_description = "NotVeryEffective"

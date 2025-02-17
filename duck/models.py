@@ -17,7 +17,7 @@ class Move(models.Model):
         for pokemon in pokemons:
             if self in [pokemon.first_move, pokemon.second_move, pokemon.third_move, pokemon.fourth_move]:
                 self.pokemon_count += 1
-                
+
         # 1. get all pokemons
         # 2. see if any of the first/second/third/fourth move in each reference self
         # 3. if yes, count +=1
@@ -27,6 +27,8 @@ class Move(models.Model):
 class Type(models.Model):
 
     name = models.CharField(max_length=30,blank=False)
+    super_effective = models.ForeignKey("self",related_name="supereffective",on_delete=models.CASCADE,null=True,blank=True)
+    not_very_effective = models.ForeignKey("self",related_name="notveryeffective",on_delete=models.CASCADE,null=True,blank=True)
     
     def __str__(self):
         return self.name
