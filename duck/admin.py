@@ -5,7 +5,7 @@ from .models import Pokemon, Move, Type
 
 @admin.register(Move)
 class MoveAdmin(admin.ModelAdmin):
-    list_display = ("name","type","pokemon_count")
+    list_display = ("name","type","damage","accuracy","pokemon_count")
 
     def pokemon_count(self, obj):
         return (obj.first_move.count() + 
