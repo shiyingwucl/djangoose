@@ -8,11 +8,7 @@ class MoveAdmin(admin.ModelAdmin):
     list_display = ("name","type","damage","accuracy","pokemon_count")
 
     def pokemon_count(self, obj):
-        return (obj.first_move.count() + 
-                obj.second_move.count() +
-                obj.third_move.count() +
-                obj.fourth_move.count()
-                )
+        return (obj.pokemon_count)
 
     pokemon_count.short_description = "Pokemon Count"
 @admin.register(Pokemon)

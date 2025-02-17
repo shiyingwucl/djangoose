@@ -5,7 +5,7 @@ class Pokemon(models.Model):
 
     name = models.CharField(max_length=60,blank=False)
     type = models.ForeignKey("Type",related_name="pokemon_type",blank=True,on_delete=models.SET_NULL, null=True)
-    first_move = models.ForeignKey("Move",related_name="first_move",blank=True,on_delete=models.SET_NULL, null=True,unique=True)
+    first_move = models.ForeignKey("Move",related_name="first_move",blank=True,on_delete=models.SET_NULL, null=True)
     second_move = models.ForeignKey("Move",related_name="second_move",blank=True,on_delete=models.SET_NULL, null=True)
     third_move = models.ForeignKey("Move",related_name="third_move",blank=True,on_delete=models.SET_NULL, null=True)
     fourth_move = models.ForeignKey("Move",related_name="fourth_move",blank=True,on_delete=models.SET_NULL, null=True)
@@ -24,11 +24,12 @@ class Move(models.Model):
 
     @property
     def pokemon_count(self):
-        return (self.first_move.count() + 
-                self.second_move.count() +
-                self.third_move.count() +
-                self.fourth_move.count()
-                )
+        return Pokemon.objects.filter(
+            models.Q(first_move=self) |
+            models.Q(second_move=self) |
+            models.Q(third_move=self) |
+            models.Q(fourth_move=self) 
+        ).distinct().count()
 
     def __str__(self):
         return self.name
