@@ -1,30 +1,45 @@
 from django.db import models
 
 # Create your models here.
+class Pokemon(models.Model):
+
+    name = models.CharField(max_length=60,blank=False)
+    type = models.ForeignKey("Type",related_name="pokemon_type",blank=True,on_delete=models.SET_NULL, null=True)
+    first_move = models.ForeignKey("Move",related_name="first_move",blank=True,on_delete=models.SET_NULL, null=True)
+    second_move = models.ForeignKey("Move",related_name="second_move",blank=True,on_delete=models.SET_NULL, null=True)
+    third_move = models.ForeignKey("Move",related_name="third_move",blank=True,on_delete=models.SET_NULL, null=True)
+    fourth_move = models.ForeignKey("Move",related_name="fourth_move",blank=True,on_delete=models.SET_NULL, null=True)
     
-class Move(models.Model):
+    # blank makes sure the property has to have a name, blank is admin, null is database
+    # figure out how to limit many to many relationships
+
     def __str__(self):
-        return f"{self.name}"
+        return self.name
+class Move(models.Model):
+
     name = models.CharField(max_length=60,blank=False)
     damage = models.IntegerField()
     accuracy = models.FloatField(max_length=4)
+    type = models.ForeignKey("Type",related_name="move_type",blank=False,on_delete=models.SET_NULL,null=True)
 
-class Moveset(models.Model):
-    def __str__(self):
-        return f"{self.moveset.all()}"
-    first_move = models.ManyToManyField(Move,related_name="first_move")
-    second_move = models.ManyToManyField(Move,related_name="second_move")
-    third_move = models.ManyToManyField(Move,related_name="third_move")
-    fourth_move = models.ManyToManyField(Move,related_name="fourth_move")
+    @property
+    def pokemon_count(self):
+        return Pokemon.objects.filter(
+            models.Q(first_move=self) |
+            models.Q(second_move=self) |
+            models.Q(third_move=self) |
+            models.Q(fourth_move=self) 
+        ).distinct().count()
 
-class Pokemon(models.Model):
     def __str__(self):
-        return f"{self.name},{self.moveset.all()}"
+        return self.name
+
+class Type(models.Model):
+
+    name = models.CharField(max_length=30,blank=False)
+    super_effective = models.ForeignKey("self",related_name="supereffective",on_delete=models.CASCADE,null=True,blank=True)
+    not_very_effective = models.ForeignKey("self",related_name="notveryeffective",on_delete=models.CASCADE,null=True,blank=True)
     
-    name = models.CharField(max_length=60,blank=False) 
-    #blank makes sure the property has to have a name, blank is admin, null is database 
-
-    moveset = models.ManyToManyField(Moveset,related_name="moveset",)
-    # figure out how to limit many to many relationships
-    # when moves are = 4, set can_get_moves to False, <4 set to True
+    def __str__(self):
+        return self.name
     

@@ -1,22 +1,30 @@
 from django.contrib import admin
-from .models import Pokemon, Moveset, Move
+from .models import Pokemon, Move, Type
 # Register your models here.
 
-@admin.register(Pokemon)
-class PokemonAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-
-@admin.register(Moveset)
-class MovesetAdmin(admin.ModelAdmin):
-
-    def safe_moveset(self, obj):
-        return str(obj.moveset.moves.all())
-    
-    list_display = (safe_moveset,)
-
-    
 
 @admin.register(Move)
 class MoveAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-#class MovesetAdmin(admin.ModelAdmin):
+    list_display = ("name","type","damage","accuracy","pokemon_count")
+
+    def pokemon_count(self, obj):
+        return (obj.pokemon_count)
+
+    pokemon_count.short_description = "Pokemon Count"
+@admin.register(Pokemon)
+class PokemonAdmin(admin.ModelAdmin):
+    list_display = ("name","type","first_move","second_move","third_move","fourth_move")
+
+@admin.register(Type)
+class TypeAdmin(admin.ModelAdmin):
+    list_display = ("name","supereffective","notveryeffective")
+
+    def supereffective(self, obj):
+        return ", ".join([child.name for child in obj.supereffective.all()])
+    
+    def notveryeffective(self, obj):
+        return ", ".join([child.name for child in obj.notveryeffective.all()])
+    
+    supereffective.short_description = "SuperEffective"
+
+    notveryeffective.short_description = "NotVeryEffective"
